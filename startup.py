@@ -8,7 +8,7 @@ start_timer = time.time()
 def onclick(event):
     global start_timer
 
-    file = open("command.txt", "a")
+    ### file = open("clear.txt", "a")
     end_timer = time.time()
 
     mouse_position = event.Position

@@ -1,14 +1,14 @@
 import pyautogui
 
 running = True
-ticks = 0
+clicks = 0
 
 while running:
-    #ticks += 1
     positions = open("command.txt", "r")
 
     for line in positions:
         xy = line
+        clicks += 1
 
         coordinates = xy.split(":")
         x = coordinates[0]
@@ -18,10 +18,29 @@ while running:
         time_between = time_between[:-1]
         # int(round(time_between, 0))
 
-        pyautogui.moveTo(int(x), int(y), float(time_between))
-        pyautogui.click()
+        if clicks == 10:
+            clean_inv = open("clear.txt", "r")
+            counter = 0
+            for commands in clean_inv:
+                command = commands
 
-    #if ticks == 10:
-     #   running = False
+                point = command.split(":")
+
+                x = point[0]
+                y = point[1]
+                time_between = point[2]
+                time_between = time_between[:-1]
+
+                if (counter % 2) == 0:
+                    pyautogui.click(int(x), int(y), int(time_between), button="right")
+                else:
+                    pyautogui.click(int(x), int(y), int(time_between))
+
+                counter += 1
+
+            clean_inv.close()
+        else:
+            pyautogui.moveTo(int(x), int(y), float(time_between))
+            pyautogui.click()
 
     positions.close()
